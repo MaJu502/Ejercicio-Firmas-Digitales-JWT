@@ -8,13 +8,49 @@
             "password": "hashed_password2",
             "email": "user2@example.com"
         },
-        "marco": {
+        "a": {
             "password": "123",
-            "email": ""
+            "email": "m@gmail.com"
         },
-        "jurado": {
+        "b": {
             "password": "123",
-            "email": ""
+            "email": "b@gmail.com"
+        },
+        "j": {
+            "password": "123",
+            "email": "j@gmail.com"
+        },
+        "m": {
+            "password": "123",
+            "email": "m@gmail.com"
+        },
+        "k": {
+            "password": "123",
+            "email": "k@gmail.com"
+        },
+        "ll": {
+            "password": "123",
+            "email": "ll@gmail.com"
+        },
+        "p": {
+            "password": "123",
+            "email": "p@gmail.com"
+        },
+        "lm": {
+            "password": "123",
+            "email": "lm@gmail.com"
+        },
+        "ui": {
+            "password": "123",
+            "email": "ui@gmail.com"
+        },
+        "ty": {
+            "password": "123",
+            "email": "ty@gmail.com"
+        },
+        "hg": {
+            "password": "123",
+            "email": "hg@gmail.com"
         }
     }
 }

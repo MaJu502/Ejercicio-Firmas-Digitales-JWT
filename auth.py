@@ -21,7 +21,7 @@ def token_required(f):
         if not token:
             return jsonify({'message': 'Authorization token is missing!'}), 403
         if token.startswith('Bearer '):
-            token = token[7:]
+            token = token.split(" ")[1]  # Remueve el prefijo 'Bearer'
         try:
             decoded = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             request.user = decoded

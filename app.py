@@ -19,7 +19,8 @@ def register():
     if username in load_users():
         return jsonify({'message': 'User already exists!'}), 409
     add_user(username, password, email)
-    token = generate_token(user_id=username, email=email)  # Genera el token tras registro exitoso
+    token = generate_token(user_id=username, email=email)
+    print('token: ', token)
     return jsonify({'token': token, 'message': 'User registered successfully!'}), 201
 
 @app.route('/login', methods=['GET', 'POST'])

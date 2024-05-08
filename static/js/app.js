@@ -22,18 +22,20 @@ document.addEventListener('DOMContentLoaded', function () {
 function register() {
     const username = document.getElementById('registerUsername').value;
     const password = document.getElementById('registerPassword').value;
+    const email = document.getElementById('registerEmail').value;
     fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: username, password: password })
+        body: JSON.stringify({ username: username, password: password, email: email })
     })
         .then(response => response.json())
         .then(data => {
             if (data.token) {
                 sessionStorage.setItem('jwt', data.token);
                 alert('Registration successful! You are now logged in.');
+                accessProtected();
                 window.location.href = '/protected';
             } else {
                 alert('Registration failed: ' + data.message);
@@ -59,18 +61,32 @@ function login() {
 }
 
 function accessProtected() {
+    alert('se ejecuta accessProtected!!!!')
     const token = sessionStorage.getItem('jwt');
+    if (!token) {
+        alert("No token found, please login first.");
+        return;
+    }
+
     fetch('/protected', {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token  // Asegúrate de que esto está presente
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        alert(JSON.stringify(data));
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch protected data: ' + response.statusText);
+        }
+        return response.json();
     })
-    .catch(error => console.error('Error:', error));
+    .then(data => {
+        console.log('Protected data:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to fetch protected data');
+    });
 }
 
 
