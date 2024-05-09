@@ -1,1 +1,2 @@
-pip install Flask PyJWT
+Flask==3.0.3
+PyJWT==2.8.0

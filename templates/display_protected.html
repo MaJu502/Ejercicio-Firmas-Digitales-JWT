@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Protected Data Display</title>
+    <link rel="stylesheet" href="/static/css/protected.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Protected Data</h1>
+        <div class="token-info">
+            <p><strong>Token:</strong> {{ token }}</p>
+            <p id="timer"><strong>Time Remaining:</strong> <span id="time">{{ remaining_time }}</span></p>
+        </div>
+        <div class="data-container">
+            <ul>
+                {% for key, value in data.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <button id="logout-button" class="logout-button">Logout</button>
+    </div>
+    <script>
+        // Añade el event listener para el botón de logout
+        document.getElementById('logout-button').addEventListener('click', function () {
+            // Si estás usando sessionStorage o localStorage para almacenar el token
+            sessionStorage.removeItem('jwt');  // Cambia a localStorage si es necesario
+
+            // Redirige al usuario a la página de login
+            window.location.href = '/login';
+        });
+
+        function countdown() {
+            let timer = document.getElementById('time').textContent;
+            let parts = timer.split(', ');
+            let seconds = parseInt(parts.pop().split(' ')[0]);
+            let minutes = parseInt(parts.pop().split(' ')[0]);
+            let hours = parseInt(parts.pop().split(' ')[0]);
+            let days = parseInt(parts.pop().split(' ')[0]);
+
+            var interval = setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                        if (hours < 0) {
+                            hours = 23;
+                            days--;
+                            if (days <= 0) {
+                                clearInterval(interval);
+                                document.getElementById('timer').innerHTML = "<strong>Session has expired!</strong>";
+                                alert('Session has expired!');
+                                document.getElementById('logout-button').click();  // Auto-logout when session expires
+                            }
+                        }
+                    }
+                }
+                document.getElementById('time').textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+            }, 1000);
+        }
+
+        countdown();
+    </script>
+</body>
+
+</html>
